@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from django.http import Http404
 
 
+# ---------- ABSTRACT VIEWS ----------
 class AbstractListView(APIView):
     entity = None
     serializer = None
@@ -54,6 +55,32 @@ class AbstractDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class AbstractFilterView(APIView):
+    filter_model = None
+    target_model = None
+    serializer = None
+
+    def get_filter_model_object(self, pk):
+        try:
+            return self.filter_model.objects.get(id=pk)
+        except self.filter_model.DoesNotExist:
+            raise Http404
+
+    def get_target_model_objects(self, arg):
+        # try:
+        #     return self.target_model.objects.filter(criteria=arg)
+        # except self.target_model.DoesNotExist:
+        #     raise Http404
+        pass
+
+    def get(self, request, pk):
+        filter_by = self.get_filter_model_object(pk)
+        target = self.get_target_model_objects(filter_by)
+        serializer = self.serializer(target, many=True)
+        return Response(serializer.data)
+
+
+# ---------- PROVIDER VIEWS ----------
 class ProviderList(AbstractListView):
     entity = Provider
     serializer = ProviderSerializer
@@ -64,6 +91,7 @@ class ProviderDetail(AbstractDetailView):
     serializer = ProviderSerializer
 
 
+# ---------- CUSTOMER VIEWS ----------
 class CustomerList(AbstractListView):
     entity = Customer
     serializer = CustomerSerializer
@@ -74,9 +102,17 @@ class CustomerDetail(AbstractDetailView):
     serializer = CustomerSerializer
 
 
-class InvoiceList(AbstractListView):
-    entity = Invoice
+# ---------- INVOICE VIEWS ----------
+class InvoiceByProvider(AbstractFilterView):
+    filter_model = Provider
+    target_model = Invoice
     serializer = InvoiceSerializer
+
+    def get_target_model_objects(self, pk):
+        try:
+            return self.target_model.objects.filter(provider=pk)
+        except self.target_model.DoesNotExist:
+            raise Http404
 
 
 class InvoiceDetail(AbstractDetailView):
@@ -84,9 +120,22 @@ class InvoiceDetail(AbstractDetailView):
     serializer = InvoiceSerializer
 
 
+# ---------- LINE ITEM VIEWS ----------
 class LineItemDetail(AbstractDetailView):
     entity = LineItem
     serializer = LineItemSerializer
+
+
+class LineItemsByInvoice(AbstractFilterView):
+    filter_model = Invoice
+    target_model = LineItem
+    serializer = LineItemSerializer
+
+    def get_target_model_objects(self, pk):
+        try:
+            return self.target_model.objects.filter(invoice=pk)
+        except self.target_model.DoesNotExist:
+            raise Http404
 
 
 class LineItemPost(APIView):
@@ -98,27 +147,3 @@ class LineItemPost(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class LineItemsByInvoice(APIView):
-    invoice = Invoice
-    line_item = LineItem
-    line_item_serializer = LineItemSerializer
-
-    def get_invoice(self, pk):
-        try:
-            return self.invoice.objects.get(id=pk)
-        except self.invoice.DoesNotExist:
-            raise Http404
-
-    def get_line_items(self, invoice):
-        try:
-            return self.line_item.objects.filter(invoice=invoice)
-        except self.line_item.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        invoice = self.get_invoice(pk)
-        invoice_rows = self.get_line_items(invoice)
-        serializer = LineItemSerializer(invoice_rows, many=True)
-        return Response(serializer.data)
