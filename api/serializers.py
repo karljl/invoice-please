@@ -1,17 +1,23 @@
 from .models import Provider, Customer, Invoice, LineItem
 from rest_framework import serializers
 
+BUSINESS_ENTITY_FIELDS = ['id',
+                          'name', 'phone', 'email',
+                          'address', 'postal_code', 'city', 'country',
+                          'registry_code', 'vat_number',
+                          'iban', 'bic_swift']
+
 
 class ProviderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Provider
-        fields = '__all__'
+        fields = BUSINESS_ENTITY_FIELDS
 
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = BUSINESS_ENTITY_FIELDS
 
 
 class InvoiceSerializer(serializers.ModelSerializer):
