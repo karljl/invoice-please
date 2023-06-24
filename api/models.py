@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 class BusinessEntity(models.Model):
@@ -37,3 +38,33 @@ class Provider(BusinessEntity):
 
 class Customer(BusinessEntity):
     registry_code = models.CharField(max_length=20, blank=True, null=True)
+
+
+class Invoice(models.Model):
+    document_number = models.CharField(max_length=10)
+
+    created = models.DateField(auto_now_add=True)
+    due_date = models.DateField()
+
+    provider = models.ForeignKey(Provider, on_delete=models.RESTRICT, related_name='provider')
+    customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, related_name='customer')
+
+    def __str__(self):
+        return f'Invoice {self.document_number} by {self.provider}'
+
+
+class LineItem(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='line_items')
+
+    description = models.CharField(max_length=100)
+
+    amount = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    price = models.PositiveIntegerField()
+    total = models.PositiveIntegerField()
+
+    def save(self, *args, **kwargs):
+        self.total = self.amount * self.price
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.description
