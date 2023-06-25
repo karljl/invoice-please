@@ -67,11 +67,10 @@ class AbstractFilterView(APIView):
             raise Http404
 
     def get_target_model_objects(self, arg):
-        # try:
-        #     return self.target_model.objects.filter(criteria=arg)
-        # except self.target_model.DoesNotExist:
-        #     raise Http404
-        pass
+        try:
+            return self.target_model.objects.filter(arg)
+        except self.target_model.DoesNotExist:
+            raise Http404
 
     def get(self, request, pk):
         filter_by = self.get_filter_model_object(pk)
