@@ -6,6 +6,7 @@ import Customer from "../components/Customer.jsx";
 
 function EditCustomer() {
     const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/customers/${params.id}/`)
@@ -14,7 +15,6 @@ function EditCustomer() {
             });
     }, [params.id]);
 
-    const navigate = useNavigate();
     const [customer, setCustomer] = useState({});
 
     const handleSubmit = async (event) => {
@@ -32,7 +32,6 @@ function EditCustomer() {
         const newData = {...customer, [name]: value};
         setCustomer(newData);
     };
-
 
     return (
         <Customer handleChange={handleChange} handleSubmit={handleSubmit} customer={customer}/>

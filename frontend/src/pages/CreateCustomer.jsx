@@ -6,6 +6,7 @@ import Customer from "../components/Customer.jsx";
 
 function CreateCustomer() {
     const navigate = useNavigate();
+
     const customerData = {
         name: "",
         phone: "",
@@ -19,6 +20,7 @@ function CreateCustomer() {
         iban: "",
         bic_swift: ""
     };
+
     const [customer, setCustomer] = useState(customerData);
 
     const handleSubmit = async (event) => {
@@ -36,7 +38,6 @@ function CreateCustomer() {
         const newData = {...customer, [name]: value};
         setCustomer(newData);
     };
-
 
     return (
         <Customer handleChange={handleChange} handleSubmit={handleSubmit} customer={customer}/>

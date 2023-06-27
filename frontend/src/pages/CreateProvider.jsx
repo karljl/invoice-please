@@ -5,6 +5,7 @@ import Provider from "../components/Provider.jsx";
 
 function CreateProvider() {
     const navigate = useNavigate();
+
     const providerData = {
         name: "",
         phone: "",
@@ -18,6 +19,7 @@ function CreateProvider() {
         iban: "",
         bic_swift: ""
     };
+
     const [provider, setProvider] = useState(providerData);
 
     const handleSubmit = async (event) => {
@@ -35,7 +37,6 @@ function CreateProvider() {
         const newData = {...provider, [name]: value};
         setProvider(newData);
     };
-
 
     return (
         <Provider handleChange={handleChange} handleSubmit={handleSubmit} provider={provider}/>
