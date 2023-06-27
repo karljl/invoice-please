@@ -1,41 +1,6 @@
-import axios from "axios";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-function CreateProvider() {
-    const navigate = useNavigate()
-    const providerData = {
-        name: "",
-        phone: "",
-        email: "",
-        address: "",
-        postal_code: "",
-        city: "",
-        country: "",
-        registry_code: "",
-        vat_number: "",
-        iban: "",
-        bic_swift: ""
-    }
-    const [provider, setProvider] = useState(providerData)
-
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        try {
-            await axios.post('http://127.0.0.1:8000/providers/', provider)
-            navigate('/')
-        } catch (e) {
-            alert('Error!')
-        }
-    }
-
-    const handleChange = (event) => {
-        const {name, value} = event.target
-        const newData = {...provider, [name]: value}
-        setProvider(newData)
-    }
-
-
+function Provider({handleChange, handleSubmit, provider}) {
     return (
         <form onChange={handleChange}>
             <input type="text" name="name" value={provider.name} placeholder="Name..."/>
@@ -54,9 +19,15 @@ function CreateProvider() {
             <input type="text" name="iban" value={provider.iban} placeholder="IBAN..."/>
             <input type="text" name="bic_swift" value={provider.bic_swift} placeholder="BIC/SWIFT..."/>
 
-            <input type="submit" value="Create a new Provider" onClick={handleSubmit}/>
+            <input type="submit" value="Submit" onClick={handleSubmit}/>
         </form>
-    )
+    );
 }
 
-export default CreateProvider
+Provider.propTypes = {
+    handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    provider: PropTypes.object.isRequired,
+};
+
+export default Provider;

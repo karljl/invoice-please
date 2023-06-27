@@ -1,41 +1,6 @@
-import axios from "axios";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-function CreateCustomer() {
-    const navigate = useNavigate()
-    const customerData = {
-        name: "",
-        phone: "",
-        email: "",
-        address: "",
-        postal_code: "",
-        city: "",
-        country: "",
-        registry_code: "",
-        vat_number: "",
-        iban: "",
-        bic_swift: ""
-    }
-    const [customer, setCustomer] = useState(customerData)
-
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        try {
-            await axios.post('http://127.0.0.1:8000/customers/', customer)
-            navigate('/')
-        } catch (e) {
-            alert('Error!')
-        }
-    }
-
-    const handleChange = (event) => {
-        const {name, value} = event.target
-        const newData = {...customer, [name]: value}
-        setCustomer(newData)
-    }
-
-
+function Customer({handleChange, handleSubmit, customer}) {
     return (
         <form onChange={handleChange}>
             <input type="text" name="name" value={customer.name} placeholder="Name..."/>
@@ -54,9 +19,15 @@ function CreateCustomer() {
             <input type="text" name="iban" value={customer.iban} placeholder="IBAN..."/>
             <input type="text" name="bic_swift" value={customer.bic_swift} placeholder="BIC/SWIFT..."/>
 
-            <input type="submit" value="Create a new Customer" onClick={handleSubmit}/>
+            <input type="submit" value="Submit" onClick={handleSubmit}/>
         </form>
-    )
+    );
 }
 
-export default CreateCustomer
+Customer.propTypes = {
+    handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    customer: PropTypes.object.isRequired,
+};
+
+export default Customer;
