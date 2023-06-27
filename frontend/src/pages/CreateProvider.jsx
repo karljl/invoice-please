@@ -39,7 +39,10 @@ function CreateProvider() {
     };
 
     return (
-        <Provider handleChange={handleChange} handleSubmit={handleSubmit} provider={provider}/>
+        <form onChange={handleChange}>
+            <Provider provider={provider}/>
+            <input type="submit" value="Submit" onClick={handleSubmit}/>
+        </form>
     );
 }
 
