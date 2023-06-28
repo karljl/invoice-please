@@ -5,6 +5,8 @@ import IndexPage from "./pages/IndexPage.jsx";
 
 import {Route, Routes} from "react-router-dom";
 
+import './App.css';
+
 function App() {
 
     return (

@@ -50,6 +50,8 @@ class Invoice(models.Model):
     provider = models.ForeignKey(Provider, on_delete=models.RESTRICT, related_name='provider')
     customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, related_name='customer')
 
+    is_paid = models.BooleanField(default=False)
+
     def __str__(self):
         return f'Invoice {self.document_number} by {self.provider}'
 

@@ -1,0 +1,56 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+p,
+div,
+table,
+thead,
+tbody,
+tfoot,
+tr,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+thead,
+th,
+td {
+    border: 1px solid black;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #dddddd;
+}
