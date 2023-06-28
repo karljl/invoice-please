@@ -1,20 +1,21 @@
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
 
 function InvoiceListView({invoices}) {
     return (
         <table>
             <thead>
             <tr>
-                <th>
+                <th className="document-number">
                     Document Number
                 </th>
-                <th>
+                <th className="created">
                     Created
                 </th>
-                <th>
+                <th className="due-date">
                     Due date
                 </th>
-                <th>
+                <th className="paid">
                     Paid
                 </th>
             </tr>
@@ -22,16 +23,16 @@ function InvoiceListView({invoices}) {
             <tbody>
             {invoices.map((invoice, index) => (
                 <tr key={index}>
-                    <td>
+                    <td className="document-number">
                         {invoice.document_number}
                     </td>
-                    <td>
-                        {invoice.created}
+                    <td className="created">
+                        {dayjs(invoice.created).format('DD/MM/YYYY')}
                     </td>
-                    <td>
-                        {invoice.due_date}
+                    <td className="due-date">
+                        {dayjs(invoice.due_date).format('DD/MM/YYYY')}
                     </td>
-                    <td>
+                    <td className="paid">
                         {invoice.is_paid ? 'Yes' : 'No'}
                     </td>
                 </tr>

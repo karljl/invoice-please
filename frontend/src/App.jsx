@@ -6,6 +6,7 @@ import IndexPage from "./pages/IndexPage.jsx";
 import {Route, Routes} from "react-router-dom";
 
 import './App.css';
+import CreateInvoice from "./pages/CreateInvoice.jsx";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/customers" element={<CreateCustomer/>}/>
                 <Route path="/edit-customer/:id" element={<EditCustomer/>}/>
                 <Route path="/providers" element={<CreateProvider/>}/>
+                <Route path="/create-invoice/:provider" element={<CreateInvoice/>}/>
             </Routes>
         </div>
     );
