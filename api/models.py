@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.utils import timezone
 
 
 class BusinessEntity(models.Model):
@@ -43,7 +44,7 @@ class Customer(BusinessEntity):
 class Invoice(models.Model):
     document_number = models.CharField(max_length=10)
 
-    created = models.DateField(auto_now_add=True)
+    created = models.DateField(default=timezone.now)
     due_date = models.DateField()
 
     provider = models.ForeignKey(Provider, on_delete=models.RESTRICT, related_name='provider')

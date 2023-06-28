@@ -21,7 +21,6 @@ class CustomerAdmin(BusinessEntityAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    readonly_fields = ['created']
     fields = ['document_number',
               'created', 'due_date',
               'provider', 'customer']

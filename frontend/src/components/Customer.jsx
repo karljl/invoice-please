@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-function Customer({handleChange, handleSubmit, customer}) {
+function Customer({customer}) {
     return (
-        <form onChange={handleChange}>
+        <>
             <input type="text" name="name" value={customer.name} placeholder="Name..."/>
 
             <input type="tel" name="phone" value={customer.phone} placeholder="Phone..."/>
@@ -19,14 +19,11 @@ function Customer({handleChange, handleSubmit, customer}) {
             <input type="text" name="iban" value={customer.iban} placeholder="IBAN..."/>
             <input type="text" name="bic_swift" value={customer.bic_swift} placeholder="BIC/SWIFT..."/>
 
-            <input type="submit" value="Submit" onClick={handleSubmit}/>
-        </form>
+        </>
     );
 }
 
 Customer.propTypes = {
-    handleChange: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
     customer: PropTypes.object.isRequired,
 };
 

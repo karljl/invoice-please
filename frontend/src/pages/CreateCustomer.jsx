@@ -40,7 +40,10 @@ function CreateCustomer() {
     };
 
     return (
-        <Customer handleChange={handleChange} handleSubmit={handleSubmit} customer={customer}/>
+        <form onChange={handleChange}>
+            <Customer customer={customer}/>
+            <input type="submit" value="Submit" onClick={handleSubmit}/>
+        </form>
     );
 }
 
