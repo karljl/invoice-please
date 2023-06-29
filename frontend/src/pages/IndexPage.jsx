@@ -16,21 +16,24 @@ function IndexPage() {
 
     const [invoices, setInvoices] = useState([]);
     const [providers, setProviders] = useState([]);
-    const [currentProvider, setCurrentProvider] = useState('0')
+    const [currentProvider, setCurrentProvider] = useState('0');
 
     function handleChange(e) {
         const id = e.target.value;
-        setCurrentProvider(id)
-        axios.get(`http://127.0.0.1:8000/providers/${id}/invoices/`)
-            .then(response => {
-                setInvoices(response.data);
-            });
+        setCurrentProvider(id);
+        if (id !== '0') {
+            axios.get(`http://127.0.0.1:8000/providers/${id}/invoices/`)
+                .then(response => {
+                    setInvoices(response.data);
+                });
+        }
+
     }
 
     return (
         <>
-            <select onChange={handleChange}>
-                <option selected disabled value="0">SELECT YOUR COMPANY</option>
+            <select defaultValue="0" onChange={handleChange}>
+                <option value="0">SELECT YOUR COMPANY</option>
                 {providers.map((provider, index) => (
                     <option key={index} value={provider.id}>{provider.name}</option>
                 ))}
