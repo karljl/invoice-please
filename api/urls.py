@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('invoices/<int:pk>/', views.InvoiceDetail.as_view()),
     path('invoices/<int:pk>/lineitems/', views.LineItemsByInvoice.as_view()),
+    path('invoices/new/', views.InvoicePost.as_view()),
 
     path('lineitems/new/', views.LineItemPost.as_view()),
     path('lineitems/<int:pk>/', views.LineItemDetail.as_view()),

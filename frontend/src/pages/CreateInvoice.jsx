@@ -38,8 +38,9 @@ function CreateInvoice() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(invoice)
         try {
-            await axios.post(`http://127.0.0.1:8000/providers/${params.provider}/invoices/`, invoice);
+            await axios.post(`http://127.0.0.1:8000/invoices/new/`, invoice);
             navigate('/');
         } catch (e) {
             alert('Error!');

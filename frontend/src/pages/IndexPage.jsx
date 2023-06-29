@@ -30,7 +30,7 @@ function IndexPage() {
     return (
         <>
             <select onChange={handleChange}>
-                <option value="0" selected disabled>Select your company</option>
+                <option selected disabled value="0">SELECT YOUR COMPANY</option>
                 {providers.map((provider, index) => (
                     <option key={index} value={provider.id}>{provider.name}</option>
                 ))}

@@ -119,6 +119,17 @@ class InvoiceDetail(AbstractDetailView):
     serializer = InvoiceSerializer
 
 
+class InvoicePost(APIView):
+    serializer = InvoiceSerializer
+
+    def post(self, request):
+        serializer = self.serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # ---------- LINE ITEM VIEWS ----------
 class LineItemDetail(AbstractDetailView):
     entity = LineItem
