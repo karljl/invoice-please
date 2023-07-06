@@ -49,7 +49,7 @@ class AbstractDetailView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, pk):
+    def delete(self, request, pk):
         entity = self.get_object(pk)
         entity.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

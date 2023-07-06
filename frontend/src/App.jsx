@@ -1,12 +1,10 @@
-import CreateCustomer from "./pages/CreateCustomer.jsx";
-import CreateProvider from "./pages/CreateProvider.jsx";
-import EditCustomer from "./pages/EditCustomer.jsx";
-import IndexPage from "./pages/IndexPage.jsx";
+import IndexPage from "./IndexPage.jsx";
+import ProviderDetail from "./components/Provider/ProviderDetail.jsx";
+import ProviderForm from "./components/Provider/ProviderForm.jsx";
+import DeleteProvider from "./components/Provider/DeleteProvider.jsx";
 
 import {Route, Routes} from "react-router-dom";
-
 import './App.css';
-import CreateInvoice from "./pages/CreateInvoice.jsx";
 
 function App() {
 
@@ -14,10 +12,11 @@ function App() {
         <div className="app">
             <Routes>
                 <Route path="/" exact element={<IndexPage/>}/>
-                <Route path="/customers" element={<CreateCustomer/>}/>
-                <Route path="/edit-customer/:id" element={<EditCustomer/>}/>
-                <Route path="/providers" element={<CreateProvider/>}/>
-                <Route path="/create-invoice/:provider" element={<CreateInvoice/>}/>
+
+                <Route path="/provider/:id" element={<ProviderDetail/>}/>
+                <Route path="/create-provider/" element={<ProviderForm/>}/>
+                <Route path="/edit-provider/:id" element={<ProviderForm/>}/>
+                <Route path="/delete-provider/:id" element={<DeleteProvider/>}/>
             </Routes>
         </div>
     );

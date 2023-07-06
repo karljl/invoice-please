@@ -10,6 +10,7 @@ h1,
 h2,
 h3,
 p,
+a,
 div,
 table,
 thead,
@@ -39,20 +40,4 @@ input,
 button,
 select {
     font: inherit;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table,
-thead,
-th,
-td {
-    border: 1px solid gray;
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #dddddd;
 }
